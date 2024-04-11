@@ -26,7 +26,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
- 
 
         // Function to save note to Local Storage
     function saveNoteToLocalStorage(dateTime, content) {
@@ -40,4 +39,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     }
+
+
+ // Add Button function
+    document.getElementById("back-button").onclick = function () 
+            {
+                location.href = "index.html";
+            };
+
 });
