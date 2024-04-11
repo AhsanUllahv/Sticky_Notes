@@ -93,7 +93,7 @@ textarea {
 
 .note {
     width: 300px; /* Width of the note */
-    height: 100px; /* Height of the note */
+    height: auto; /* Height of the note */
     background-color: #fff; /* Background color */
     padding: 20px; /* Padding inside the note */
     margin-bottom: 20px; /* Margin below each note */
@@ -102,7 +102,11 @@ textarea {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
     display: block;
 }
-
+.note .delete-button{
+    margin-bottom: 1px;
+    margin-top: 10px;
+    
+}
 
 
 
