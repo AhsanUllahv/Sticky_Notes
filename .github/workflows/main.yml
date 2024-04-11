@@ -15,4 +15,5 @@ jobs:
 
       - name: Copy Code to /var/www/html
         run: |
-          cp -r . /var/www/html
+          ls -la
+          cp -r * /var/www/html
