@@ -1,0 +1,97 @@
+/* style.css */
+
+/* Reset default margin and padding */
+body, h1, p, button {
+    margin: 0;
+    padding: 0;
+}
+
+/* Set background color and text color */
+body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Style the header */
+h1 {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Style each sticky note */
+.sticky-note {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sticky-note p {
+    margin-bottom: 10px;
+    color: #555;
+}
+
+
+/*single_note_delete*/
+.single_note_delete {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.single_note_delete:hover {
+    background-color: #c82333;
+}
+
+
+
+
+/* Style the delete all button */
+.delete-btn {
+ display: block;
+    margin-top: 20px;
+    width: auto;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+
+/* Style the "Back" button */
+.back-btn {
+    display: block;
+    margin-top: 0px;
+    width: 100px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+    background-color: #c82333;
+}
