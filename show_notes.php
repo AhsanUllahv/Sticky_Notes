@@ -1,3 +1,7 @@
+<?php
+require_once("sessionchk.php"); // Include session management code
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +14,10 @@
     <?php
     include 'database.php';
     
-    $notes = getNotes();
+    // Get the user ID from the session
+    $user_id = $_SESSION['user_id'];
+    
+    $notes = getNotes($user_id);
     
     // Sort notes by date
     usort($notes, function($a, $b) {

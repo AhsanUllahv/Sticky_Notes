@@ -1,4 +1,17 @@
 <?php
+// Include session management code
+require_once("sessionchk.php");
+
+// Check if the user is authenticated
+if (!isset($_SESSION['user_id'])) {
+    // Redirect the user to the login page
+    header("Location: signin.php");
+    exit(); // Stop further execution
+}
+
+// Get the user ID from the session
+$user_id = $_SESSION['user_id'];
+
 include 'database.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -6,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $time = $_POST['time'];
     $note = $_POST['note'];
 
-    if (addNote($date, $time, $note)) {
+    if (addNote($user_id, $date, $time, $note)) {
         echo "Note added successfully!";
     } else {
         echo "Error adding note!";
