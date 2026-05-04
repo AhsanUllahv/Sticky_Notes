@@ -12,37 +12,69 @@ if ($conn->connect_error) {
 
 function addNote($user_id, $date, $time, $note) {
     global $conn;
+
     $submit_dt = date('Y-m-d H:i:s');
-    $sql = "INSERT INTO notes (user_id, date, time, note, submit_dt) VALUES ('$user_id', '$date', '$time', '$note', '$submit_dt')";
-    if ($conn->query($sql) === TRUE) {
-        return true;
-    } else {
-        return "Error: " . $sql . "<br>" . $conn->error;
+    $stmt = $conn->prepare("INSERT INTO notes (user_id, date, time, note, submit_dt) VALUES (?, ?, ?, ?, ?)");
+
+    if (!$stmt) {
+        return false;
     }
+
+    $stmt->bind_param("issss", $user_id, $date, $time, $note, $submit_dt);
+    $result = $stmt->execute();
+    $stmt->close();
+
+    return $result;
 }
 
-function deleteNote($sno) {
+function deleteNote($sno, $user_id) {
     global $conn;
-    $sql = "DELETE FROM notes WHERE sno='$sno'";
-    return $conn->query($sql);
+
+    $stmt = $conn->prepare("DELETE FROM notes WHERE sno = ? AND user_id = ?");
+    if (!$stmt) {
+        return false;
+    }
+
+    $stmt->bind_param("ii", $sno, $user_id);
+    $result = $stmt->execute();
+    $stmt->close();
+
+    return $result;
 }
 
-function deleteAllNotes() {
+function deleteAllNotes($user_id) {
     global $conn;
-    $sql = "TRUNCATE TABLE notes";
-    return $conn->query($sql);
+
+    $stmt = $conn->prepare("DELETE FROM notes WHERE user_id = ?");
+    if (!$stmt) {
+        return false;
+    }
+
+    $stmt->bind_param("i", $user_id);
+    $result = $stmt->execute();
+    $stmt->close();
+
+    return $result;
 }
 
 function getNotes($user_id) {
     global $conn;
-    $sql = "SELECT sno, date, time, note FROM notes WHERE user_id='$user_id'";
-    $result = $conn->query($sql);
-    $notes = [];
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $notes[] = $row;
-        }
+
+    $stmt = $conn->prepare("SELECT sno, date, time, note FROM notes WHERE user_id = ? ORDER BY date ASC, time ASC, sno ASC");
+    if (!$stmt) {
+        return [];
     }
+
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $notes = [];
+    while ($row = $result->fetch_assoc()) {
+        $notes[] = $row;
+    }
+
+    $stmt->close();
     return $notes;
 }
 ?>

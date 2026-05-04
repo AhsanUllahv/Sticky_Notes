@@ -12,7 +12,7 @@ require_once("sessionchk.php");
 </head>
 <body>
     <h1>Welcome to Sticky Notes</h1>
-    <p>Hello, <?php echo $_SESSION['username']; ?>!</p>
+    <p>Hello, <?php echo htmlspecialchars($_SESSION['username']); ?>!</p>
     <a href="add_note.php">Add New Note</a>
     <a href="show_notes.php">Show Notes</a>
     <a href="logout.php">Logout</a>
