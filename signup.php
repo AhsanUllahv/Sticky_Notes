@@ -2,31 +2,36 @@
 <html>
 <head>
     <title>Sign Up</title>
-      <link rel="stylesheet" type="text/css" href="signup.css">
+    <link rel="stylesheet" type="text/css" href="signup.css">
 </head>
 <body>
     <h1>Sign Up</h1>
-    
+
     <?php
-    // Include database connection
     include 'database.php';
-    
-    // Check if the form is submitted
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Retrieve form data
-        $username = $_POST['username'];
-        $email = $_POST['email'];
+        $username = trim($_POST['username']);
+        $email = trim($_POST['email']);
         $password = $_POST['password'];
-        
-        // Hash the password for security
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        
-        // Insert user data into the database
-        $sql = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$hashed_password')";
-        if ($conn->query($sql) === TRUE) {
-            echo "<p>Sign up successful!</p>";
+
+        if ($username === '' || $email === '' || $password === '') {
+            echo "<p>All fields are required.</p>";
         } else {
-            echo "<p>Error: " . $sql . "<br>" . $conn->error . "</p>";
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+
+            if ($stmt) {
+                $stmt->bind_param("sss", $username, $email, $hashed_password);
+                if ($stmt->execute()) {
+                    echo "<p>Sign up successful!</p>";
+                } else {
+                    echo "<p>Unable to sign up with those details.</p>";
+                }
+                $stmt->close();
+            } else {
+                echo "<p>Something went wrong. Please try again.</p>";
+            }
         }
     }
     ?>
